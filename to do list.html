@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>to do list</title>
+</head>
+
+<body>
+
+<center>
+
+<h2>TO DO LIST</h2>
+
+<div id="area">
+
+<input type="text" id="field">
+
+
+<input type="button" value="Add" placeholder="write here" onclick="add()">
+</div> 
+
+</center>
+
+<script>
+
+let container= document.getElementById("area")
+function add(){
+	var para = document.createElement("p")
+	para.style.cursor='pointer'
+	para.innerText="* "+field.value
+	container.appendChild(para)
+	field.value=""
+	
+
+para.addEventListener(
+"click",function(){
+			 para.style.textDecoration="line-through"
+			}
+			  )
+para.addEventListener(
+"dblclick",function(){
+			   container.removeChild(para)			   
+				}
+			  )
+}
+</script>
+
+
+ 
+</body>
+</html>

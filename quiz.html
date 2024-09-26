@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9c5d79;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz Application</h1>
+        <div id="quiz"></div>
+        <button id="submit">Submit</button>
+        <div id="score-container" class="hidden">
+            <h2>Your Score: <span id="score"></span></h2>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "In which year did India gain independence?",
+        a: "1940",
+        b: "1937",
+        c: "1947",
+        d: "1950",
+        correct: "c"
+    },
+    {
+        question: "Who led the Salt March in 1930?",
+        a: "Jawaharlal Nehru",
+        b: "Subhas Chandra Bose",
+        c: "Mahatma Gandhi",
+        d: "Sardar Vallabhbhai Patel",
+        correct: "c"
+    },
+    {
+        question: "Rainbow consist of how many colours?",
+        a: "9",
+        b: "7",
+        c: "5",
+        d: "6",
+        correct: "b"
+    },
+    {
+        question: "How many continents are there in the world?",
+    a: "7",
+    b: "8",
+    c: "9",
+    d: "5",
+    correct: "a"},
+        ];
+
+        const quiz = document.getElementById('quiz');
+        const submitButton = document.getElementById('submit');
+        const scoreContainer = document.getElementById('score-container');
+        const scoreDisplay = document.getElementById('score');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            const currentQuizData = quizData[currentQuestionIndex];
+            quiz.innerHTML = `
+                <h2>${currentQuizData.question}</h2>
+                <label><input type="radio" name="answer" value="a"> ${currentQuizData.a}</label><br>
+                <label><input type="radio" name="answer" value="b"> ${currentQuizData.b}</label><br>
+                <label><input type="radio" name="answer" value="c"> ${currentQuizData.c}</label><br>
+                <label><input type="radio" name="answer" value="d"> ${currentQuizData.d}</label>
+            `;
+        }
+
+        function getSelectedAnswer() {
+            const answers = document.querySelectorAll('input[name="answer"]');
+            for (const answer of answers) {
+                if (answer.checked) {
+                    return answer.value;
+                }
+            }
+            return null;
+        }
+
+        submitButton.addEventListener('click', () => {
+            const answer = getSelectedAnswer();
+            if (answer) {
+                if (answer === quizData[currentQuestionIndex].correct) {
+                    score++;
+                }
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuiz();
+                } else {
+                    quiz.innerHTML = '';
+                    scoreContainer.classList.remove('hidden');
+                    scoreDisplay.textContent = score + '/' + quizData.length;
+                }
+            } else {
+                alert("Please select an answer!");
+            }
+        });
+
+        // Load the first question
+        loadQuiz();
+    </script>
+</body>
+</html>

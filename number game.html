@@ -1,0 +1,38 @@
+
+
+<html>
+<body>
+    <h1>Guess the Number</h1>
+    Enter a number between 1 and 100<br><br>
+
+    <input type="text" id="guess" min="1" max="100">
+    <button onclick="checkGuess()">Submit</button>
+
+    <p id="result"></p>
+
+    <script>
+        const randomNumber=Math.floor(Math.random()*100)+1;
+        let attempts=0;
+
+        function checkGuess(){
+            const guess = parseInt(document.getElementById("guess").value);
+            const res=document.getElementById("result");
+
+            if(attempts<7){
+                attempts++;
+
+                if(guess<randomNumber){
+                    res.textContent="too low. try again";
+                } else if(guess>randomNumber){
+                    res.textContent="Too high! Try again.";
+                } else{
+                    res.textContent="congratulations";
+                }
+            }else{
+                res.textContent="failed. maximum attempts reached";
+            }
+        }
+    </script>
+    
+</body>
+</html>
